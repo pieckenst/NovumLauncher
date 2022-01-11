@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProductVersion>3.5</ProductVersion>
+    <ProjectGuid>{C48F3BBD-8B5F-4657-8940-BE231E4FC58E}</ProjectGuid>
+    <RootNamespace>NovumLauncherSwiftUi</RootNamespace>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>NovumLauncherSwiftUi</AssemblyName>
+    <ApplicationIcon>Properties\App.ico</ApplicationIcon>
+    <ProjectTypeGuids>{89896941-7261-4476-8385-4DA3CE9FDB83};{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{656346D9-4656-40DA-A068-22D5425D4639}</ProjectTypeGuids>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
+    <Mode>Echoes</Mode>
+    <TargetFramework>.NETCore</TargetFramework>
+    <NETCoreRuntime>Microsoft.WindowsDesktop.App</NETCoreRuntime>
+    <Name>NovumLauncherSwiftUi</Name>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Optimize>False</Optimize>
+    <ConditionalDefines>DEBUG;TRACE;</ConditionalDefines>
+    <OutputPath>.\Bin\Debug</OutputPath>
+    <GeneratePDB>True</GeneratePDB>
+    <EnableAsserts>True</EnableAsserts>
+    <GenerateMDB>True</GenerateMDB>
+    <ConditionalDefines>DEBUG;TRACE;</ConditionalDefines>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>.\Bin\Release</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Echoes">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Silver">
+      <Private>True</Private>
+    </Reference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Name>Common</Name>
+      <Project>{645d5477-ee2c-4e23-9abd-8d5d2666022a}</Project>
+      <Private>True</Private>
+      <HintPath>..\Common\bin\x86\Debug\net6.0\win-x86\Common.dll</HintPath>
+    </ProjectReference>
+    <ProjectReference Include="..\ViewModelSwiftUi\ViewModelSwiftUi.csproj">
+      <Name>ViewModelSwiftUi</Name>
+      <Project>{bd952e6a-21d2-41c3-94ac-7fdf0b9fbfa9}</Project>
+      <Private>True</Private>
+      <HintPath>..\ViewModelSwiftUi\bin\Debug\net6.0\ViewModelSwiftUi.dll</HintPath>
+    </ProjectReference>
+    <NuGetReference Include="microsoft.toolkit.mvvm:*" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml" />
+    <Compile Include="App.xaml.swift" />
+    <Page Include="Window1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Window1.xaml.swift" />
+    <None Include="Properties\App.ico" />
+    <Compile Include="Properties\AssemblyInfo.swift" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\RemObjects Software\Elements\RemObjects.Elements.targets" />
+</Project>

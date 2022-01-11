@@ -33,7 +33,6 @@ public sealed class Utils
         }
     }
 
-
     public string GameInstallLocation()
     {
         string fullRegLocationPath = "";
@@ -65,32 +64,26 @@ public sealed class Utils
 
         MemoryAccessWrapper.WriteProcessMemory(hProcess, address, patchBytes, patchSize, out IntPtr _);
 
-
         MemoryAccessWrapper.VirtualProtectEx(hProcess, address, new UIntPtr((uint)patchSize), lpflOldProtect,
             out lpflOldProtect);
     }
-    
-    
+
     public void InjectDllAndResumeThread(IntPtr hProcess, IntPtr hThread, string dllName)
     {
         IntPtr moduleHandle = GetModuleHandle("kernel32.dll");
         if (moduleHandle == IntPtr.Zero) throw new Win32Exception(Marshal.GetLastWin32Error());
 
-
         IntPtr loadLibraryAdder = GetProcAddress(moduleHandle, "LoadLibraryA");
 
         if (loadLibraryAdder == IntPtr.Zero) throw new Win32Exception(Marshal.GetLastWin32Error());
-
 
         IntPtr allocMemAddress = VirtualAllocEx(hProcess, IntPtr.Zero,
             (uint)((dllName.Length + 1) * Marshal.SizeOf(typeof(char))), _allocationType, _memoryProtection);
 
         if (allocMemAddress == IntPtr.Zero) throw new Win32Exception(Marshal.GetLastWin32Error());
 
-
         MemoryAccessWrapper.WriteProcessMemory(hProcess, allocMemAddress, Encoding.Default.GetBytes(dllName),
             dllName.Length + 1, out IntPtr _);
-
 
         IntPtr remoteThread = CreateRemoteThread(hProcess, IntPtr.Zero, 0, loadLibraryAdder,
             allocMemAddress, 0,
@@ -98,19 +91,16 @@ public sealed class Utils
 
         if (remoteThread == IntPtr.Zero) throw new Win32Exception(Marshal.GetLastWin32Error());
 
-
         if (WaitForSingleObject(remoteThread, 80000) == 0x00000000)
             ResumeThread(hThread);
         else
             throw new Exception("Wait for Single Object timed out");
-
 
         VirtualFreeEx(hProcess, allocMemAddress, 0, _freeType);
 
         CloseHandle(hProcess);
         CloseHandle(hThread);
     }
-
 
     public string GetHostNameIP(string hostname)
     {
@@ -128,14 +118,13 @@ public sealed class Utils
             using (FileStream fileStream = File.OpenRead(filePath))
             {
                 byte[] sha1Bytes = sha1.ComputeHash(fileStream);
-                
+
                 foreach (byte b in sha1Bytes) result += b.ToString("x2");
             }
         }
 
         return result;
     }
-
 
     public ServerInfoModel GetSelectedServer()
     {
@@ -190,7 +179,7 @@ public sealed class Utils
             //offset += 4 + count2;
         }
     }
-    
+
     /// <summary>
     /// Source : https://bitbucket.org/Ioncannon/project-meteor-server/raw/4762811347383c2ef6a013eca643e27176f1c22d/Launcher%20Editor/Program.cs
     /// </summary>
